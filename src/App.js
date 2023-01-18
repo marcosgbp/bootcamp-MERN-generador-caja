@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import BoxForm from "./Components/BoxForm";
+import BoxList from "./Components/BoxList";
 
 function App() {
+  const [listaColor, setListaColor] = useState([]);
+  const addColor = (data) => {
+    data.id = Date.now();
+     setListaColor([
+      ...listaColor,
+      data
+    ]) 
+  }
+  const deleteBox = (id)=>{
+    let newData = listaColor.filter(el=>el.id!==id);
+    setListaColor(newData);
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App container">
+      <BoxForm addColor={addColor}/>
+      <BoxList listaColor={listaColor} deleteBox={deleteBox}/>
     </div>
   );
 }
